@@ -21,7 +21,7 @@ Ask AU is a desktop-based AI chatbot designed to improve access to information f
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - **Python**
 - **Tkinter** & **ttkbootstrap** for GUI
