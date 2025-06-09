@@ -1,0 +1,187 @@
+{
+  "athabasca_university_info": {
+    "general_information": {
+      "about_university": "Athabasca University (AU) is a Canadian institution renowned for its commitment to providing accessible and flexible online education.",
+      "university": "Athabasca University",
+      "website": "https://www.athabascau.ca/"
+    },
+    "admissions": {
+      "how_to_apply": "You can apply online through AU’s admissions portal at https://www.athabascau.ca/admissions/. A non-refundable application fee of $138 is required."
+    },
+    "tuition_fees": {
+      "non_funded_students": "Non-funded students pay for their courses on a pay-as-you-go basis. There are no minimum course load requirements unless they are enrolled in a full-time program with academic prerequisites.",
+      "funded_students": "Funded students, such as those receiving government loans (e.g., OSAP, Student Aid Alberta), must maintain at least 60% of a full-time course load (typically three courses or nine credits per semester) to remain eligible for funding. They must also meet GPA requirements to continue receiving aid."
+    },
+    "course_registration": {
+      "non_funded_students": "Non-funded students have the flexibility to choose their course load. They can register for as few or as many courses as they want, provided they meet prerequisite and program-specific rules.",
+      "funded_students": "Funded students must meet the minimum course load requirement to remain eligible for financial aid. They also need to follow strict registration timelines to avoid penalties."
+    },
+    "exam_policy": {
+      "non_funded_students": "Non-funded students can schedule their exams freely and request supplemental exams if necessary (with a fee). They are not restricted by funding-related academic progress rules.",
+      "funded_students": "Funded students must maintain academic progress to stay eligible for financial aid. Repeated failures and supplemental exams may impact their funding eligibility, requiring them to demonstrate academic improvement."
+    },
+    "course_withdrawal_and_extensions": {
+      "non_funded_students": "Non-funded students can withdraw from courses or request extensions with fewer restrictions. They may need to pay a fee for extensions but can manage their academic schedule with greater flexibility.",
+      "funded_students": "Funded students face restrictions when withdrawing from courses, as dropping below the required course load may result in funding loss or repayment requirements. Extensions may also be reviewed by the financial aid office."
+    },
+    "deadlines": {
+      "non_funded_students": "Non-funded students have more flexibility regarding deadlines but must still follow AU’s academic rules and complete their courses within the contract period.",
+      "funded_students": "Funded students must follow strict deadlines for registration, withdrawals, and course completion as set by their funding agencies. Missing deadlines may result in financial aid loss."
+    },
+    "transfer_credits": {
+      "non_funded_students": "Non-funded students can apply for transfer credits by submitting transcripts and course descriptions. If approved, they may reduce the number of courses they need to complete their program.",
+      "funded_students": "Funded students can apply for transfer credits, but their funding eligibility may be affected if their total required credit count changes. Funding agencies often have guidelines on how transfer credits impact financial aid."
+    },
+    "financial_aid_and_rewards": {
+      "non_funded_students": "Non-funded students can apply for AU scholarships, bursaries, and awards, which may be based on academic achievement, financial need, or a combination of both.",
+      "funded_students": "Funded students can also apply for scholarships and bursaries. However, receiving both government loans and AU financial awards may affect their total funding eligibility. Some scholarships require a minimum GPA for continued eligibility."
+    },
+    "student_services": {
+      "non_funded_students": "Non-funded students have full access to AU's student services, including academic advising, career services, library resources, and tutoring.",
+      "funded_students": "Funded students have access to the same services, but they may be required to meet with an academic advisor to ensure they stay on track for graduation and maintain financial aid eligibility."
+    },
+    "policies_for_funded_vs_non_funded_students": {
+      "academic_progress": "Funded students must meet minimum GPA and credit requirements to continue receiving financial aid. Falling below this standard may result in funding loss.",
+      "withdrawal_policies": "Funded students must adhere to strict withdrawal policies, as dropping courses or failing to meet credit requirements could require them to repay received funding.",
+      "program_completion": "Funded students are expected to complete their programs within the time frame outlined in their financial aid agreements. Non-funded students have more flexibility in managing their course load."
+    },
+    "supplemental_exam": {
+      "can_request": true,
+      "details": "Yes, students can request a supplemental exam for a non-refundable fee of $204. The higher score between the original and supplemental exam will be used for the final grade. Requests must be made within 90 days after the initial exam date."
+    },
+    "university_policies": {
+      "description": "Athabasca University maintains a comprehensive Policy and Procedures Manual, available to students and staff. This manual provides detailed information on various academic and administrative matters.",
+      "url": "https://www.athabascau.ca/"
+    },
+    "graduation": {
+      "graduation_overview": "Graduation from Athabasca University involves formally applying to graduate once all program requirements are met. Students are responsible for confirming their eligibility.",
+      "how_to_apply": "Students must submit a graduation application through the MyAU student portal. There is a non-refundable fee and a deadline for each convocation cycle.",
+      "convocation_description": "Convocation ceremonies are held annually in June in Athabasca, Alberta. Attendance is optional, but students can choose to attend in person or graduate in absentia.",
+      "convocation_location": "Athabasca University, Athabasca, Alberta",
+      "virtual_options": "Students who cannot attend in person may view the ceremony online.",
+      "regalia_information": "Graduates attending in person must rent or purchase academic regalia through the designated supplier listed on AU's graduation page.",
+      "graduation_links": {
+        "graduation_info_page": "https://www.athabascau.ca/current-students/graduation.html",
+        "convocation_details_page": "https://www.athabascau.ca/current-students/convocation.html"
+      }
+    },
+    "resources": {
+      "general_faq": {
+        "url": "https://www.athabascau.ca/contact/askau.html",
+        "description": "FAQs covering academic records, admissions, advising, courses, exams, fees, financial aid, programs, registrations, and tech support."
+      },
+      "student_handbooks": {
+        "graduate_handbook": {
+          "url": "https://www.athabascau.ca/graduate-studies/resources/graduate-handbook/index.html",
+          "description": "Outlines policies and regulations for graduate students."
+        },
+        "accessibility_services_handbook": {
+          "url": "https://www.athabascau.ca/support-services/_documents/as-handbook-generic.pdf",
+          "description": "Guidance on accommodations and support for students with disabilities."
+        }
+      },
+      "academic_faqs": {
+        "future_students": {
+          "url": "https://www.athabascau.ca/support-services/program-and-course-advising/advising-for-future-students/future-students-faqs.html",
+          "description": "FAQs for prospective students covering admissions and course enrollment."
+        },
+        "program_students": {
+          "url": "https://www.athabascau.ca/support-services/program-and-course-advising/advising-for-current-and-visiting-students/program-students/index.html",
+          "description": "FAQs for students enrolled in programs."
+        },
+        "non_program_students": {
+          "url": "https://www.athabascau.ca/support-services/program-and-course-advising/advising-for-current-and-visiting-students/non-program-students-faqs.html",
+          "description": "FAQs for students taking courses outside of a degree program."
+        }
+      },
+      "policies_procedures": {
+        "url": "https://www.athabascau.ca/university-secretariat/policy-and-procedures/index.html",
+        "description": "Centralized repository of university policies and procedures."
+      },
+      "student_support_services": {
+        "student_union_faq": {
+          "url": "https://www.ausu.org/our-story/faqs/",
+          "description": "Information about scholarships, bursaries, awards, and student services."
+        },
+        "etext_faq": {
+          "url": "https://www.athabascau.ca/etext-initiative/student-information/frequently-asked-questions.html",
+          "description": "Information on electronic textbooks and digital learning materials."
+        }
+      },
+      "indigenous_student_resources": {
+        "nukskahtowin_faq": {
+          "url": "https://www.athabascau.ca/indigenous/resources/frequently-asked-questions.html",
+          "description": "FAQs on Indigenous studies, course offerings, and related support."
+        }
+      },
+      "community_forums": {
+        "reddit_community": {
+          "url": "https://www.reddit.com/r/AthabascaUniversity/comments/155vd7q/athabasca_course_question/",
+          "description": "A student-driven forum discussing AU courses, experiences, and advice."
+        }
+      },
+      "academic_calendar": {
+        "url": "https://www.athabascau.ca/calendar/index.html",
+        "description": "Athabasca University Academic Calendar, providing details on programs, courses, important dates, and university policies."
+      },
+      "student_communities": {
+        "nearpeer_app": {
+          "description": "Nearpeer is a platform for Athabasca University students to connect, discuss, and collaborate.",
+          "availability": "Downloadable on iOS and Android platforms."
+        },
+        "facebook_group": {
+          "url": "https://www.facebook.com/share/g/1G8XbFGa38/?mibextid=wwXIfr",
+          "description": "A community-driven group where AU students can seek help, share experiences, and engage in discussions."
+        }
+      },
+      "staff_hours": {
+        "general_contact_center": {
+          "hours": "Monday to Friday, 9 a.m. – 4 p.m. (Mountain Time) (Closed from 12 p.m. – 1 p.m.)",
+          "phone": "1-780-675-6100 (International) | 1-800-788-9041 (Toll-free in Canada/US)",
+          "url": "https://www.athabascau.ca/contact/index.html"
+        },
+        "faculty_of_business_support": {
+          "hours": "Monday to Thursday, 8:30 a.m. – 8:30 p.m.; Friday, 8:30 a.m. – 4:30 p.m. (Mountain Time)",
+          "email": "business-support@athabascau.ca",
+          "phone": "1-800-468-6531 (Canada/US) | 1-780-675-6189 (International)",
+          "url": "https://www.athabascau.ca/business/about/contact-us.html"
+        },
+        "faculty_of_health_disciplines": {
+          "hours": "Monday to Friday, 9 a.m. – 4 p.m. (Mountain Time) (Closed from 12 p.m. – 1 p.m.)",
+          "email": {
+            "graduate": "fhdgradadvise@athabascau.ca",
+            "undergraduate": "bnadvisor@athabascau.ca"
+          },
+          "url": "https://www.athabascau.ca/support-services/about/programs-and-course-advising-team.html"
+        }
+      },
+      "chat_with_us": {
+        "url": "https://www.athabascau.ca/contact/index.html",
+        "description": "AI-driven chatbot to assist with academic records, admissions, advising, courses, exams, and more."
+      },
+      "course_syllabi": {
+        "url": "https://www.athabascau.ca/course/index.html",
+        "description": "Comprehensive list of AU courses with direct links to their syllabi.",
+        "courses": {
+          "...": "Refer to your original file for full course list"
+        }
+      },
+      "exam_services_support": {
+        "url": "https://www.athabascau.ca/support-services/exam-services-support/index.html",
+        "description": "Details on arranging exam invigilators, ProctorU online invigilation, and contact information for exam-related inquiries."
+      },
+      "technical_support": {
+        "url": "https://www.athabascau.ca/support-services/about/technical-support/course-list.html",
+        "description": "Support for accessing courses, troubleshooting technical problems, and guidance on using AU's online platforms."
+      },
+      "alumni_engagement": {
+        "url": "https://www.athabascau.ca/alumni/contact-us/index.html",
+        "description": "Information on alumni benefits, events, and ways to stay connected with the AU community."
+      },
+      "cybersecurity_awareness": {
+        "url": "https://www.athabascau.ca/cybersecurity/awareness/ai_and_cybersecurity.html",
+        "description": "Insights into the implications of AI in cybersecurity and how to stay informed."
+      }
+    }
+  }
+}

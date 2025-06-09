@@ -1,0 +1,293 @@
+# Import necessary libraries and modules
+import json  # For working with JSON data
+import os  # For handling file and environment-related operations
+import openai  # For using OpenAI API to get GPT responses
+import tkinter as tk  # For creating the GUI (Graphical User Interface)
+from tkinter import scrolledtext, messagebox  # Additional UI elements from tkinter
+import ttkbootstrap as ttk  # For adding modern UI components using Bootstrap themes
+from ttkbootstrap import Style  # For applying specific styles to UI elements
+import re  # For using regular expressions to detect and format URLs
+import threading  # For running background tasks without freezing the UI
+import time  # For adding delay or waiting before displaying responses
+from rapidfuzz import process  # For fuzzy string matching to find best-matching FAQ entries
+import webbrowser  # For opening URLs in the browser
+from dotenv import load_dotenv  # For loading environment variables securely
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get API key securely from .env
+API_KEY = os.getenv("OPENAI_API_KEY")
+
+# Check if API key is loaded properly, exit if not found
+if not API_KEY:
+    print("Error: OpenAI API key not found. Please check your .env file.")
+    exit(1)
+
+# Flatten nested JSON into flat key-value pairs for easier searching
+def flatten_json(y, parent_key='', sep='.'):
+    items = {}
+    for k, v in y.items():
+        new_key = f"{parent_key}{sep}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.update(flatten_json(v, new_key, sep=sep))  # Recursive call for nested dictionaries
+        else:
+            items[new_key] = v
+    return items
+
+# Load and flatten FAQ Data from JSON file
+def load_faq_data():
+    filename = "athabasca_faqs.json"
+    if not os.path.exists(filename):
+        print(f"Error: {filename} not found! Using empty FAQ data.")
+        return {}
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            raw_data = json.load(file)
+        return flatten_json(raw_data)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON format - {e}")
+        return {}
+
+# Load and store FAQ data for quick lookup
+faq_data = load_faq_data()
+
+# Find the best match in the JSON keys using fuzzy matching
+def get_best_match(question):
+    if not faq_data:
+        return None
+    result = process.extractOne(question, faq_data.keys())
+    if result:
+        best_match, score, _ = result
+        if score >= 80:  # Accept only high-confidence matches
+            return faq_data[best_match]
+    return None
+
+# Get a response from GPT when no local match is found
+def ask_gpt(question):
+    try:
+        openai.api_key = API_KEY
+        response = openai.ChatCompletion.create(
+            model="gpt-4o",  # Use the latest GPT model
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant for Athabasca University."},
+                {"role": "user", "content": question}
+            ],
+            max_tokens=500  # Limit response length
+        )
+        return response['choices'][0]['message']['content'].strip()
+    except Exception as e:
+        return f"Chatbot: OpenAI API error: {str(e)}"
+
+# Send and process the user message
+def send_message(event=None, question=None):
+    if question:
+        user_message = question  # Use predefined quick question if available
+    else:
+        user_message = user_input.get().strip()  # Get user input from the entry box
+        if not user_message:
+            return
+        user_input.delete(0, tk.END)
+
+    # Display user message in the chat window
+    chat_window.config(state=tk.NORMAL)
+    chat_window.insert(tk.END, f"\n\nYou: {user_message}\n", "user")
+    chat_window.config(state=tk.DISABLED)
+    chat_window.yview(tk.END)
+
+    # Custom Response for "Tell me about Athabasca University"
+    if user_message.lower() in [
+        "tell me about athabasca university",
+        "what is athabasca university?",
+        "give me information about athabasca university"
+    ]:
+        chat_window.config(state=tk.NORMAL)
+        chat_window.insert(tk.END, "Chatbot: Typing...\n", "bot")
+        chat_window.config(state=tk.DISABLED)
+        chat_window.yview(tk.END)
+
+        # Show custom response with a delay to simulate typing
+        def show_custom_response():
+            time.sleep(3)  # Add delay for "Typing..."
+            custom_response = (
+                "Athabasca University (AU) is a Canadian institution known for its leadership in online and distance education. "
+                "Established in 1970, AU offers flexible learning options for undergraduate and graduate programs.\n\n"
+                "**Course Registration Deadlines:**\n"
+                "For undergraduate, individualized study courses, the registration deadline is the 10th of the previous month for the desired start date. "
+                "For example, to start a course on June 1, registration must be completed by May 10.\n\n"
+                "**Booking Exams:**\n"
+                "Booking an exam is a 2-step process. First, book your exam with an AU-approved invigilator at least 10 days before the exam date. "
+                "Then, confirm the appointment and request your exam through myAU at least 10 days before the date you wish to write the exam.\n\n"
+                "**Accommodations for Students with Disabilities:**\n"
+                "Students registered for accessibility services must request their exams at least 20 days before the exam date to allow enough time for preparation.\n\n"
+                "**Supplemental Exams:**\n"
+                "Students who are unsatisfied with their exam grade can request a supplemental exam within 90 days of writing the original exam. "
+                "The higher of the two grades will be used to calculate the final grade.\n\n"
+                "**Transfer Credit Options:**\n"
+                "AU offers various transfer credit options including individual course assessment, block transfer, post-diploma programs, and prior learning recognition. "
+                "Students can transfer credits from other accredited institutions as well.\n\n"
+                "**For more information, visit:** [Athabasca University's official website](https://www.athabascau.ca/)."
+            )
+            chat_window.config(state=tk.NORMAL)
+            chat_window.delete("end-2l", "end-1l")  # Remove "Typing..."
+            display_response(custom_response)
+
+        threading.Thread(target=show_custom_response).start()
+        return
+
+    # Search local JSON data for a match
+    question_lower = user_message.lower()
+    local_answer = get_best_match(question_lower)
+
+    # Show answer from local FAQ if found
+    if local_answer:
+        display_response(local_answer)
+    else:
+        # Display "Typing..." for GPT responses
+        chat_window.config(state=tk.NORMAL)
+        chat_window.insert(tk.END, "Chatbot: Typing...\n", "bot")
+        chat_window.config(state=tk.DISABLED)
+        chat_window.yview(tk.END)
+
+        # Get response from GPT if no local match is found
+        def get_gpt_response():
+            time.sleep(1.5)  # Simulate typing delay
+            bot_response = ask_gpt(user_message)
+            chat_window.config(state=tk.NORMAL)
+            chat_window.delete("end-2l", "end-1l")  # Removes "Typing..."
+            display_response(bot_response)
+
+        threading.Thread(target=get_gpt_response).start()
+
+# Display the bot response with support for clickable URLs
+def display_response(response):
+    chat_window.config(state=tk.NORMAL)
+
+    # URL Pattern for detecting and displaying clickable links
+    url_pattern = r"(https?://[^\s\)]+)"
+    parts = re.split(url_pattern, response)
+
+    # Insert the bot response
+    chat_window.insert(tk.END, "Chatbot: ", "bot")
+    for part in parts:
+        if re.match(url_pattern, part):
+            clean_url = part.rstrip(').,')
+            chat_window.insert(tk.END, clean_url, ("link", clean_url))
+            chat_window.tag_add(clean_url, "end-%dc" % (len(clean_url) + 1), "end")
+            chat_window.tag_bind(clean_url, "<Button-1>", lambda e, url=clean_url: open_link(url))
+            chat_window.tag_config(clean_url, foreground="#FFA500", underline=True)
+        else:
+            chat_window.insert(tk.END, part, "bot")
+    chat_window.insert(tk.END, "\n")
+    chat_window.config(state=tk.DISABLED)
+    chat_window.yview(tk.END)
+
+# Open URL in browser when clicked
+def open_link(url):
+    url = url.rstrip(').,')
+    webbrowser.open_new(url)
+
+# Clear the chat window with confirmation
+def clear_chat():
+    confirmation = messagebox.askyesno(
+        "Confirm Clear Chat",
+        "Are you sure you want to clear the chat?"
+    )
+    if confirmation:
+        chat_window.config(state=tk.NORMAL)
+        chat_window.delete(1.0, tk.END)
+        chat_window.config(state=tk.DISABLED)
+        chat_window.insert(tk.END, "Chatbot: Chat cleared successfully!\n", "bot")
+    else:
+        chat_window.config(state=tk.NORMAL)
+        chat_window.insert(tk.END, "\nChatbot: Chat clear cancelled.\n", "bot")
+        chat_window.config(state=tk.DISABLED)
+
+# ---------------- UI DESIGN ---------------- #
+# Initialize the main application window
+root = tk.Tk()
+root.title("Ask AU - AI Chatbot")
+root.geometry("750x800")
+
+# Apply Bootstrap Theme for Modern UI
+style = Style(theme="flatly")
+
+# Define Bootstrap Primary Blue (#337ab7) as Primary Color
+PRIMARY_BLUE = "#337ab7"
+
+# Header Title - Centered and Styled Properly
+title_label = ttk.Label(
+    root,
+    text="Ask AU - AI Chatbot",
+    font=("Arial", 18, "bold"),
+    bootstyle="primary",
+    anchor="center"
+)
+title_label.pack(fill="x", pady=10)
+
+# Chat Window with White Background
+chat_frame = ttk.Frame(root)
+chat_window = scrolledtext.ScrolledText(
+    chat_frame, wrap=tk.WORD, width=75, height=20, font=("Arial", 12),
+    bg="white", fg="black", insertbackground="black"
+)
+chat_window.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+chat_frame.pack(padx=10, pady=5, fill=tk.BOTH, expand=True)
+
+# Apply Correct Text Styles for Chat Window
+chat_window.tag_config("user", foreground=PRIMARY_BLUE, font=("Arial", 12, "bold"))
+chat_window.tag_config("bot", foreground="#4F4F4F", font=("Arial", 12))
+chat_window.tag_config("link", foreground="#FFA500", underline=True, font=("Arial", 12, "bold"))
+
+# Bottom Section with Input & Send Button
+bottom_frame = ttk.Frame(root)
+bottom_frame.pack(fill="x", padx=10, pady=5)
+
+# User Input Box with Clean Border
+user_input = ttk.Entry(bottom_frame, width=60, font=("Arial", 12), bootstyle="light", foreground=PRIMARY_BLUE)
+user_input.pack(side="left", padx=10, pady=10, ipady=5, fill="x", expand=True)
+
+# Send Button - Styled Properly
+send_button = ttk.Button(bottom_frame, text="Send", command=send_message, bootstyle="primary")
+send_button.pack(side="right", padx=5, pady=10)
+
+# Quick Questions Section
+quick_label = ttk.Label(
+    root,
+    text="Quick Questions – Click to Learn Instantly",
+    font=("Arial", 12, "bold"),
+    bootstyle="primary"
+)
+quick_label.pack(pady=(10, 5))
+
+# List of quick questions for user convenience
+quick_questions = [
+    "Contact Info for Athabasca University",
+    "How can I apply to Athabasca University?",
+    "Tell me about Athabasca University"
+]
+
+# Create buttons for each quick question
+for question in quick_questions:
+    btn = ttk.Button(
+        root,
+        text=question,
+        command=lambda q=question: send_message(question=q),
+        bootstyle="primary"
+    )
+    btn.pack(pady=3, fill="x")
+
+# Clear Chat Button - Now with Confirmation
+clear_button = ttk.Button(
+    root,
+    text="Clear Chat",
+    command=clear_chat,
+    bootstyle="danger"
+)
+clear_button.pack(pady=10)
+
+# Bind Enter key to send message
+root.bind("<Return>", send_message)
+
+# Start the application loop
+root.mainloop()
